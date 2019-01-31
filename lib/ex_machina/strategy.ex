@@ -68,8 +68,14 @@ defmodule ExMachina.Strategy do
 
           def unquote(function_name)(factory_name, attrs \\ %{}) do
             record = ExMachina.build(__MODULE__, factory_name, attrs)
+            data = unquote(function_name)(record)
+            function_callback_name = :"#{factory_name}_callback"
 
-            unquote(function_name)(record)
+            if function_exported?(__MODULE__, function_callback_name, 1) do
+              apply(__MODULE__, function_callback_name, [data])
+            end
+
+            data
           end
 
           def unquote(:"#{function_name}_pair")(factory_name, attrs \\ %{}) do

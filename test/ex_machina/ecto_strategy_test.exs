@@ -160,4 +160,10 @@ defmodule ExMachina.EctoStrategyTest do
       TestFactory.insert(:user, name: "Maximus") |> TestFactory.insert()
     end
   end
+
+  test "insert/1 inserts the record and execute callback if callback function exists" do
+    TestFactory.insert(:user)
+
+    assert_received :callback_performed
+  end
 end

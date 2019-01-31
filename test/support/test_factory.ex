@@ -17,6 +17,10 @@ defmodule ExMachina.TestFactory do
     }
   end
 
+  def user_callback(_struct) do
+    send(self(), :callback_performed)
+  end
+
   def publisher_factory do
     %ExMachina.Publisher{}
   end
